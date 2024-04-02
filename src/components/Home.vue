@@ -1,7 +1,5 @@
 <script setup>
 
-  console.log('Home');
-
 </script>
 
 ><template>
