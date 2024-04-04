@@ -1,6 +1,7 @@
 <script setup>
   import { ref } from 'vue';
   import ProductCard from '../components/ProductCard.vue'
+  import Loading from '../components/Loading.vue'
 
   const loading = ref(true)
   const productList = ref([])
@@ -22,17 +23,15 @@
 </script>
 
 ><template>
-  <section class="">
+  <Loading v-if="loading" />
+  <section class="" v-else>
     <h2>
       Products
     </h2>
     <ul class="flex justify-center gap-[2rem]">
       <li v-for="product in productList" :key="product.id">
         <ProductCard 
-          :id="product.id"
-          :name="product.name"
-          :price="product.price"
-          :expiration="product.expiration"
+          :product="product"
         />
       </li>
     </ul>

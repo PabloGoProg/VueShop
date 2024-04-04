@@ -1,37 +1,44 @@
 <script setup>
 
+  import { showCurrency } from '../helpers.js'
+  import { ref } from 'vue'
+  import { shoppingCartKey, addItemToCart } from '../shoppingCartHelpers'
+
   const props = defineProps({
-    id: {
-      type: Number,
-      required: true
-    },
-    name: {
-      type: String,
-      required: true,
-    },
-    price: {
-      type: Number,
-      required: true
-    },
-    expiration: {
-      type: String,
-      required: false,
-      default: 'No aplica'
+    product: {
+      id: {
+        type: Number,
+        required: true
+      },
+      name: {
+        type: String,
+        required: true,
+      },
+      price: {
+        type: Number,
+        required: true
+      },
+      expiration: {
+        type: String,
+        required: false,
+      }
     }
   });
 
-  const showCurrency = (value) => {
-    try {
-      const formatter = new Intl.NumberFormat('es-CO', {
-      style: 'currency',
-      currency: 'COP',
-      minimumFractionDigits: 0,
-      });
-      return formatter.format(value);
-    } catch (error) {
-      return `COP ${value.toFixed(2)}`; 
-    }
-  }
+  const currentCart = ref(JSON.parse(localStorage.getItem(shoppingCartKey)));
+
+  const searchProductInCart = () => {
+    const found = currentCart.value.some(cartProduct => cartProduct.id === props.product.id);
+    return found;
+  };
+
+  const isInCart = ref(searchProductInCart());
+  console.log(isInCart.value)
+  
+  const addToCart = () => {
+    addItemToCart(currentCart.value, props.product);
+    isInCart.value = !isInCart.value;
+  };
 
 </script>
 
@@ -40,14 +47,20 @@
     <img class="w-[24dvw] h-[30dvh] bg-[#EEE] rounded-t-lg opacity-40" src="../assets/image.svg" alt="Product image template">
     <section class="flex flex-col px-3 py-2 gap-1">
       <div class="flex justify-between text-[1.2rem] items-center">
-        <span class="font-semibold">{{ name }}</span>
-        <span>{{ showCurrency(price) + ' COP'}}</span>
+        <span class="font-semibold">{{ product.name }}</span>
+        <span>{{ showCurrency(product.price) + ' COP'}}</span>
       </div>
       <span v-if="expiration">
-        Expira el {{ expiration }}
+        Expira el {{ product.expiration }}
       </span>
-      <button class="bg-[#E0D11D] bg-opacity-80 text-white max-w-fit px-4 py-0.5 rounded-lg font-semibold text-[1.2rem] mt-2 hover:bg-[#A1953D] transition-all duration-300 ">
+      <span v-else>
+        No aplica
+      </span>
+      <button class="bg-[#E0D11D] bg-opacity-80 text-white max-w-fit px-4 py-0.5 rounded-lg font-semibold text-[1.2rem] mt-2 hover:bg-[#A1953D] transition-all duration-300" v-if="!isInCart" @click="addToCart">
         Añadir al carrito
+      </button>
+      <button class="bg-green-500 bg-opacity-80 text-white max-w-fit px-4 py-0.5 rounded-lg font-semibold text-[1.2rem] mt-2 hover:bg-red-500 transition-all duration-300" v-else>
+        En tu carrito!
       </button>
     </section>
   </section>

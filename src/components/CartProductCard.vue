@@ -1,6 +1,8 @@
 <script setup>
 
-const props = defineProps({
+  import { showCurrency } from '../helpers.js'
+
+  const props = defineProps({
     product: {
       id: {
         type: Number,
@@ -17,7 +19,11 @@ const props = defineProps({
       expiration: {
         type: String,
         required: false,
-        default: 'No aplica'
+      },
+      quantity: {
+        type: Number,
+        required: true,
+        default: 1
       }
     }
   });
@@ -25,24 +31,27 @@ const props = defineProps({
 </script>
 
 <template>
-  <section class="flex gap-[1dvw]">
-    <img src="../assets/image.svg" alt="product image template">
-    <section>
+  <section class="flex gap-[1dvw] bg-slate-50">
+    <img class="w-[9dvw] opacity-50" src="../assets/image.svg" alt="product image template">
+    <section class="flex flex-col min-w-[34.5dvw]">
       <div class="flex justify-between">
-        <span>{{ product.name }}</span>
+        <span class="text-lg font-semibold">{{ product.name }}</span>
         <div>
           <!-- Delete button and change quantity -->
         </div>
       </div>
       <div>
-        <div>
+        <div class="flex justify-between">
           <span>
             Precio unitario:
           </span>
-          <span>{{  }}</span>
+          <span>{{ showCurrency(product.price) }} COP</span>
+        </div>
+        <div class="flex justify-between">
+          <span>Precio acumulado:</span>
+          <span>({{ product.quantity }}) unidades {{ showCurrency((product.price * product.quantity)) }} COP</span>
         </div>
       </div>
-      <div></div>
     </section>
   </section>
 </template>
