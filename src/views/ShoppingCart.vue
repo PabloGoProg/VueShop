@@ -1,11 +1,13 @@
 <script setup>
+import { ref } from "vue";
+import CartProductCard from "../components/CartProductCard.vue";
+import { deleteItemFromCart, shoppingCartKey } from "../shoppingCartHelpers.js";
 
-  import { ref } from 'vue';
-  import CartProductCard from '../components/CartProductCard.vue'
-  import { shoppingCartKey } from '../shoppingCartHelpers'
+const currentCart = ref(JSON.parse(localStorage.getItem(shoppingCartKey)));
 
-  const currentCart = JSON.parse(localStorage.getItem(shoppingCartKey));
-
+const deleteProduct = (productIndex) => {
+  deleteItemFromCart(productIndex, currentCart.value);
+};
 </script>
 
 <template>
@@ -16,9 +18,7 @@
       </h2>
       <ul class="flex flex-col gap-2 mt-4">
         <li v-for="product in currentCart" :key="product.id">
-          <CartProductCard 
-            :product="product"
-          />
+          <CartProductCard :product="product" :deleteProduct="deleteProduct" />
         </li>
       </ul>
     </section>

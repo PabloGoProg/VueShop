@@ -1,12 +1,11 @@
 const shoppingCartKey = 'shoppingCart';
 
 const searchProductInCart = (productIndex, currentCart) => {
-  currentCart.forEach((product, index) => {
-    if(productIndex == product.id) {
-      return index;
+  for (let i = 0; i < currentCart.length; i++) {
+    if (currentCart[i].id === productIndex) {
+      return i;
     }
-  });
-
+  }
   return -1;
 }
 
@@ -25,11 +24,14 @@ const addItemToCart = (currentCart, product) => {
   console.log(currentCart);
 }
 
-const deleteItemFromCart = () => {
-  const product_index = searchProductInCart(product.id, currentCart);
+const deleteItemFromCart = (productId, currentCart) => {
+  console.log(currentCart)
+  const product_index = searchProductInCart(productId, currentCart);
+  console.log(product_index)
   if(product_index === -1) return;
 
-
+  currentCart.splice(product_index, 1);
+  localStorage.setItem(shoppingCartKey, JSON.stringify(currentCart));
 }
 
 export {
