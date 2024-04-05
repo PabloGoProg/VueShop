@@ -1,3 +1,4 @@
+// ShoppingCart key on LocalStorage
 const shoppingCartKey = 'shoppingCart';
 
 const searchProductInCart = (productIndex, currentCart) => {
@@ -17,19 +18,19 @@ const addItemToCart = (currentCart, product) => {
     return;
   } 
 
-  // If the product wasn't found in curentCart, the we addd it with base quantity 
+  // If the product wasn't found in curentCart, then we addd it with base quantity 
   product.quantity = 1;
   currentCart.push(product);
+  // Updates shoppinCart object in LocalStorage
   localStorage.setItem(shoppingCartKey, JSON.stringify(currentCart));
-  console.log(currentCart);
 }
 
 const deleteItemFromCart = (productId, currentCart) => {
-  console.log(currentCart)
+  // validate if productId exists on the current cart
   const product_index = searchProductInCart(productId, currentCart);
-  console.log(product_index)
   if(product_index === -1) return;
 
+  // Delete found index, then update the current cart
   currentCart.splice(product_index, 1);
   localStorage.setItem(shoppingCartKey, JSON.stringify(currentCart));
 }

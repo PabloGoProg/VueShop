@@ -5,6 +5,7 @@ import { deleteItemFromCart, shoppingCartKey } from "../shoppingCartHelpers.js";
 
 const currentCart = ref(JSON.parse(localStorage.getItem(shoppingCartKey)));
 
+// This functions will be passed as a prop to CartProductCard component in order to use it on DelteModal
 const deleteProduct = (productIndex) => {
   deleteItemFromCart(productIndex, currentCart.value);
 };

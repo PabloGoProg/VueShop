@@ -26,6 +26,7 @@ const props = defineProps({
       default: 1,
     },
   },
+  // We define a prop with Function type in order to recieve parent's functions which will allows us to update him
   deleteProduct: {
     type: Function,
     required: true,
@@ -46,6 +47,8 @@ const emit = defineEmits(["deleteProductEmit"]);
       <div class="flex justify-between items-center">
         <span class="text-lg font-semibold">{{ product.name }}</span>
         <div>
+          <!-- here we also pass deleteProduct as a prop, finishing the share of
+          behavior between ShoppingCart and DeleteModal -->
           <ModalDelete
             :buttonText="'Eliminar'"
             :productIndex="product.id"

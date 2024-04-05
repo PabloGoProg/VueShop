@@ -24,9 +24,9 @@ fetchProducts();
 
 >
 <template>
+  <!-- If loading equals true, loading spinner will be displayed -->
   <Loading v-if="loading" />
   <section class="" v-else>
-    <h2>Products</h2>
     <ul class="flex justify-center gap-[2rem]">
       <li v-for="product in productList" :key="product.id">
         <ProductCard :product="product" />
