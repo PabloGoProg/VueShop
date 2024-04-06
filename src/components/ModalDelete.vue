@@ -27,7 +27,7 @@ const handleDeleteProduct = () => {
 <template>
   <section>
     <button
-      class="mx-auto bg-red-400 text-white text-md font-semibold rounded-lg max-w-fit px-2 py-0.5 hover:shadow-md"
+      class="mx-auto bg-red-400 text-white text-lg font-semibold rounded-lg max-w-fit px-2 py-0.5 hover:shadow-md"
       @click="openModal = true"
     >
       {{ buttonText }}

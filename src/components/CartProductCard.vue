@@ -1,6 +1,7 @@
 <script setup>
 import { showCurrency } from "../helpers.js";
 import ModalDelete from "./ModalDelete.vue";
+import QuantityButton from "./QuantityButton.vue";
 
 const props = defineProps({
   product: {
@@ -31,13 +32,15 @@ const props = defineProps({
     type: Function,
     required: true,
   },
+  changeProductQuantity: {
+    type: Function,
+    required: true,
+  },
 });
-
-const emit = defineEmits(["deleteProductEmit"]);
 </script>
 
 <template>
-  <section class="flex gap-[1dvw] bg-slate-50 rounded-lg shadow-sm">
+  <section class="flex gap-[1dvw] bg-slate-50 rounded-lg shadow-md">
     <img
       class="w-[7dvw] opacity-50"
       src="../assets/image.svg"
@@ -46,9 +49,12 @@ const emit = defineEmits(["deleteProductEmit"]);
     <section class="flex flex-col min-w-[36dvw] justify-evenly">
       <div class="flex justify-between items-center">
         <span class="text-lg font-semibold">{{ product.name }}</span>
-        <div>
-          <!-- here we also pass deleteProduct as a prop, finishing the share of
-          behavior between ShoppingCart and DeleteModal -->
+        <div class="flex gap-3">
+          <QuantityButton
+            :productIndex="product.id"
+            :quantity="product.quantity"
+            :changeProductQuantity="props.changeProductQuantity"
+          />
           <ModalDelete
             :buttonText="'Eliminar'"
             :productIndex="product.id"

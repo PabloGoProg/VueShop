@@ -3,6 +3,7 @@ const shoppingCartKey = 'shoppingCart';
 
 const searchProductInCart = (productIndex, currentCart) => {
   for (let i = 0; i < currentCart.length; i++) {
+    console.log(currentCart[i].id, productIndex)
     if (currentCart[i].id === productIndex) {
       return i;
     }
@@ -35,9 +36,21 @@ const deleteItemFromCart = (productId, currentCart) => {
   localStorage.setItem(shoppingCartKey, JSON.stringify(currentCart));
 }
 
+const changeItemQuantity = (productId, currentCart, newQuantity) => {
+  // validate if productId exists on the current cart
+  const product_index = searchProductInCart(productId, currentCart);
+  if(product_index === -1) return;
+
+  // Update quantity of the product
+  currentCart[product_index].quantity = newQuantity;
+  localStorage.setItem(shoppingCartKey, JSON.stringify(currentCart));
+
+}
+
 export {
   searchProductInCart,
   addItemToCart,
   deleteItemFromCart,
+  changeItemQuantity,
   shoppingCartKey
 }
