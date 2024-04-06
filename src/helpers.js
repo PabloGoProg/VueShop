@@ -11,6 +11,21 @@ const showCurrency = (value) => {
   }
 }
 
+const formatDateString = (inputDate) => {
+  const dateObject = new Date(inputDate);
+  const options = {
+      weekday: 'long',
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+      hour: 'numeric',
+      minute: 'numeric',
+  };
+
+  return dateObject.toLocaleString('es-ES', options);
+}
+
 export {
   showCurrency
+  ,formatDateString
 }

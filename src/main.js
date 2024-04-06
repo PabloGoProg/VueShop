@@ -6,8 +6,16 @@ import App from './App.vue'
 
 const createCartInMemory = () => {
   const shoppingCart = localStorage.getItem('shoppingCart');
+  const buysList = localStorage.getItem('buys');
+  const productList = localStorage.getItem('avaliableProducts');
   if(!shoppingCart) {
     localStorage.setItem('shoppingCart', JSON.stringify([]))
+  }
+  if(!buysList) {
+    localStorage.setItem('buys', JSON.stringify([]))
+  } 
+  if(!productList) {
+    localStorage.setItem('avaliableProducts', JSON.stringify([]))
   }
   return;
 }

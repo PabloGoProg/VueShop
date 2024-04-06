@@ -18,6 +18,23 @@ const deleteProduct = (productIndex) => {
 const changeProductQuantity = (productIndex, quantity) => {
   changeItemQuantity(productIndex, currentCart.value, quantity);
 };
+
+const handleBuyCart = () => {
+  if (currentCart.value.length > 0) {
+    const currentBuys = JSON.parse(localStorage.getItem("buys"));
+    currentBuys.push({
+      products: currentCart.value,
+      date: new Date().toLocaleDateString(),
+    });
+
+    // Add all current cart into buys array and clear the cart
+    localStorage.setItem("buys", JSON.stringify(currentBuys));
+    localStorage.setItem(shoppingCartKey, JSON.stringify([]));
+    currentCart.value = [];
+  } else {
+    alert("No hay productos en el carrito para comprar");
+  }
+};
 </script>
 
 <template>
@@ -43,7 +60,7 @@ const changeProductQuantity = (productIndex, quantity) => {
       </section>
       <button
         class="bg-[#E0D11D] bg-opacity-80 text-black max-w-fit px-4 py-0.5 rounded-lg font-semibold text-[1.2rem] mt-2 hover:text-white hover:bg-[#A1953D] transition-all duration-300"
-        @click="() => this.$router.push('productos')"
+        @click="() => $router.push('productos')"
       >
         Ver más productos!
       </button>
@@ -52,7 +69,7 @@ const changeProductQuantity = (productIndex, quantity) => {
       <h2 class="text-3xl border-2 border-black px-1.5 py-1 rounded-md">
         CUENTA DE COBRO!
       </h2>
-      <CartSummary :currentCart="currentCart" />
+      <CartSummary :currentCart="currentCart" :handleBuyCart="handleBuyCart" />
     </section>
   </section>
 </template>

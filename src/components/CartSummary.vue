@@ -1,10 +1,14 @@
 <script setup>
-import { ref } from "vue";
 import { showCurrency } from "../helpers";
+import ModalBuyCart from "../components/ModalBuyCart.vue";
 
 const props = defineProps({
   currentCart: {
     type: Array,
+    required: true,
+  },
+  handleBuyCart: {
+    type: Function,
     required: true,
   },
 });
@@ -48,10 +52,9 @@ const getTotalCost = () => {
         </li>
       </ul>
     </details>
-    <button
-      class="bg-[#E0D11D] bg-opacity-80 text-black max-w-fit px-4 py-0.5 rounded-lg font-semibold text-[1.2rem] hover:text-white hover:bg-[#A1953D] transition-all duration-300"
-    >
-      Realizar compra! 🛒
-    </button>
+    <ModalBuyCart
+      :buttonText="'Realizar compra! 🛒'"
+      :handleBuyCart="props.handleBuyCart"
+    />
   </section>
 </template>

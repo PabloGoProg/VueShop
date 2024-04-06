@@ -1,7 +1,7 @@
 <script setup>
 import { showCurrency } from "../helpers.js";
-import { ref } from "vue";
-import { shoppingCartKey, addItemToCart } from "../shoppingCartHelpers";
+import ModalDeleteProduct from "./ModalDeleteProduct.vue";
+import ModalEditProduct from "./ModalEditProduct.vue";
 
 const props = defineProps({
   product: {
@@ -23,22 +23,6 @@ const props = defineProps({
     },
   },
 });
-
-const currentCart = ref(JSON.parse(localStorage.getItem(shoppingCartKey)));
-
-const searchProductInCart = () => {
-  const found = currentCart.value.some(
-    (cartProduct) => cartProduct.id === props.product.id
-  );
-  return found;
-};
-
-const isInCart = ref(searchProductInCart());
-
-const addToCart = () => {
-  addItemToCart(currentCart.value, props.product);
-  isInCart.value = !isInCart.value;
-};
 </script>
 
 <template>
@@ -59,19 +43,16 @@ const addToCart = () => {
         Expira el {{ product.expiration }}
       </span>
       <span v-else> No aplica </span>
-      <button
-        class="bg-[#E0D11D] bg-opacity-80 text-white max-w-fit px-4 py-0.5 rounded-lg font-semibold text-[1.2rem] mt-2 hover:bg-[#A1953D] transition-all duration-300"
-        v-if="!isInCart"
-        @click="addToCart"
-      >
-        Añadir al carrito
-      </button>
-      <button
-        class="bg-green-500 bg-opacity-80 text-white max-w-fit px-4 py-0.5 rounded-lg font-semibold text-[1.2rem] mt-2 hover:bg-red-500 transition-all duration-300"
-        v-else
-      >
-        En tu carrito!
-      </button>
+      <div class="flex gap-[1rem] mx-auto mt-4">
+        <ModalEditProduct
+          :buttonText="'✏️  Editar producto!'"
+          :product="props.product"
+        />
+        <ModalDeleteProduct
+          :buttonText="'🗑️  Eliminar producto'"
+          :productIndex="props.product.id"
+        />
+      </div>
     </section>
   </section>
 </template>

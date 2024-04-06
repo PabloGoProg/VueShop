@@ -3,7 +3,6 @@ const shoppingCartKey = 'shoppingCart';
 
 const searchProductInCart = (productIndex, currentCart) => {
   for (let i = 0; i < currentCart.length; i++) {
-    console.log(currentCart[i].id, productIndex)
     if (currentCart[i].id === productIndex) {
       return i;
     }
