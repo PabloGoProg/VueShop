@@ -59,7 +59,7 @@ const handleCreateProduct = async () => {
 <template>
   <section>
     <button
-      class="mx-auto bg-gray-300 text-black text-lg font-semibold rounded-lg max-w-fit px-2 py-1 hover:shadow-md hover:bg-green-500 transition-all duration-300"
+      class="min-w-[75dvw] mx-auto bg-gray-300 text-black text-lg font-semibold rounded-lg max-w-fit px-2 py-2 hover:shadow-md hover:bg-green-500 transition-all duration-300"
       @click="openModal = true"
     >
       {{ buttonText }}

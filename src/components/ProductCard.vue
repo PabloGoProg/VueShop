@@ -43,7 +43,7 @@ const addToCart = () => {
 
 <template>
   <section
-    class="max-h-fit bg-[#EEE] bg-opacity-30 mt-6 rounded-b-lg shadow-md hover:shadow-lg"
+    class="max-h-fit bg-[#EEE] bg-opacity-30 rounded-b-lg shadow-md hover:shadow-lg"
   >
     <img
       class="w-[24dvw] h-[30dvh] bg-[#EEE] rounded-t-lg opacity-40"
