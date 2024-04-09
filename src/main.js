@@ -4,6 +4,13 @@ import './style.css'
 import './index.css'
 import App from './App.vue'
 
+import { OhVueIcon, addIcons } from "oh-vue-icons";
+import { FcShop } from "oh-vue-icons/icons";
+
+addIcons({
+  FcShop,
+})
+
 const createCartInMemory = () => {
   const shoppingCart = localStorage.getItem('shoppingCart');
   const buysList = localStorage.getItem('buys');
@@ -23,5 +30,6 @@ const createCartInMemory = () => {
 createCartInMemory();
 
 createApp(App)
+  .component("v-icon", OhVueIcon)
   .use(router)
   .mount('#app')

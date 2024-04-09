@@ -1,5 +1,5 @@
 <script setup>
-import { showCurrency } from "../helpers.js";
+import { showCurrency, formatDateString } from "../helpers.js";
 import { ref } from "vue";
 import { shoppingCartKey, addItemToCart } from "../shoppingCartHelpers";
 

@@ -52,9 +52,11 @@ const getTotalCost = () => {
         </li>
       </ul>
     </details>
-    <ModalBuyCart
-      :buttonText="'Realizar compra! 🛒'"
-      :handleBuyCart="props.handleBuyCart"
-    />
+    <section v-if="currentCart.length > 0">
+      <ModalBuyCart
+        :buttonText="'Realizar compra! 🛒'"
+        :handleBuyCart="props.handleBuyCart"
+      />
+    </section>
   </section>
 </template>

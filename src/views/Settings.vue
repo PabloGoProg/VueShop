@@ -10,6 +10,11 @@ const loading = ref(true);
 const currentProducts = ref([]);
 
 fetchProducts(currentProducts, loading);
+
+const handleUpdateProducts = () => {
+  currentProducts.value = [];
+  fetchProducts(currentProducts, loading);
+};
 </script>
 
 <template>
@@ -20,13 +25,19 @@ fetchProducts(currentProducts, loading);
     <h2 class="text-3xl border-2 border-black px-1.5 py-1 rounded-md">
       CONFIGURA TUS PRODUCTOS! 🛍️
     </h2>
-    <div class="flex justify-between gap-[1rem]">
+    <div class="flex justify-between gap-[1rem] mt-[1rem]">
       <SearchBar />
-      <button class="max-w-fit">Añadir nuevo producto</button>
+      <ModalCreateProduct
+        :buttonText="'+ Añandir producto'"
+        :currentProducts="currentProducts"
+      />
     </div>
-    <ul class="flex justify-center gap-[2rem]">
+    <ul class="flex justify-center gap-[1Prem]">
       <li class="" v-for="product in currentProducts" :key="product.id">
-        <ManageProductCard :product="product" />
+        <ManageProductCard
+          :product="product"
+          :handleUpdateProducts="handleUpdateProducts"
+        />
       </li>
     </ul>
   </section>

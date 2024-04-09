@@ -1,5 +1,6 @@
 <script setup>
 import { ref } from "vue";
+import { deleteProduct, fetchProducts } from "../API/products";
 
 const props = defineProps({
   buttonText: {
@@ -10,15 +11,26 @@ const props = defineProps({
     type: Number,
     required: true,
   },
+  handleUpdateProducts: {
+    type: Function,
+    required: true,
+  },
 });
 
 const openModal = ref(false);
+
+const handleDeleteProduct = () => {
+  deleteProduct(props.productIndex);
+
+  props.handleUpdateProducts();
+  openModal.value = !openModal.value;
+};
 </script>
 
 <template>
   <section>
     <button
-      class="mx-auto bg-red-500 text-white text-lg font-semibold rounded-lg max-w-fit px-2 py-0.5 hover:shadow-md"
+      class="mx-auto bg-gray-300 text-black text-lg font-semibold rounded-lg max-w-fit px-2 py-1 hover:shadow-md hover:bg-red-400 transition-all duration-300"
       @click="openModal = true"
     >
       {{ buttonText }}
@@ -39,7 +51,7 @@ const openModal = ref(false);
           Estás seguro de que quieres eliminar el producto?</span
         >
         <button
-          class="mx-auto bg-red-400 text-white text-lg font-semibold rounded-lg max-w-fit px-2 py-1 hover:shadow-md"
+          class="mx-auto bg-gray-300 text-black text-lg font-semibold rounded-lg max-w-fit px-2 py-1 hover:shadow-md hover:bg-red-400 transition-all duration-300"
           @click="handleDeleteProduct"
         >
           Estoy seguro!

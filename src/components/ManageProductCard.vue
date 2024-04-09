@@ -22,6 +22,10 @@ const props = defineProps({
       required: false,
     },
   },
+  handleUpdateProducts: {
+    type: Function,
+    required: true,
+  },
 });
 </script>
 
@@ -51,6 +55,7 @@ const props = defineProps({
         <ModalDeleteProduct
           :buttonText="'🗑️  Eliminar producto'"
           :productIndex="props.product.id"
+          :handleUpdateProducts="props.handleUpdateProducts"
         />
       </div>
     </section>
