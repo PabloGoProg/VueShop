@@ -11,6 +11,10 @@ const props = defineProps({
     type: Function,
     required: true,
   },
+  currentProducts: {
+    type: Array,
+    required: true,
+  },
   product: {
     id: {
       type: Number,
@@ -48,8 +52,20 @@ const handleChangeInput = (event) => {
   };
 };
 
+const lookDuplicates = (name) => {
+  const found = false;
+  for (let i = 0; i < props.currentProducts.length; i++) {
+    if (props.currentProducts[i].name === name) {
+      return true;
+    }
+  }
+
+  return found;
+};
+
 const handleEditProduct = (event) => {
   const { name, price } = inputValues.value;
+  event.preventDefault();
   errors.value = [];
 
   if (name === "") {
@@ -72,6 +88,9 @@ const handleEditProduct = (event) => {
     errors.value.push(
       "La fecha de expiración debe ser mayor a la fecha actual"
     );
+  }
+  if (lookDuplicates(name)) {
+    errors.value.push("El producto ya existe");
   }
 
   if (errors.value.length > 0) {

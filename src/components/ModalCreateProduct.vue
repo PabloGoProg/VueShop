@@ -16,9 +16,6 @@ const props = defineProps({
 const openModal = ref(false);
 const loading = ref(false);
 const errors = ref([]);
-const avaliableProducts = ref(
-  JSON.parse(localStorage.getItem("avaliableProducts"))
-);
 
 const inputValues = ref({
   name: "",
