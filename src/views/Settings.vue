@@ -54,6 +54,7 @@ fetchProducts(currentProducts, loading);
           :product="product"
           :handleUpdateProducts="handleUpdateProducts"
           :handleDeleteProduct="handleDeleteProduct"
+          :currentProducts="currentProducts"
         />
       </li>
       <li v-else v-for="product in filteredProducts">
@@ -61,6 +62,7 @@ fetchProducts(currentProducts, loading);
           :product="product"
           :handleUpdateProducts="handleUpdateProducts"
           :handleDeleteProduct="handleDeleteProduct"
+          :currentProducts="currentProducts"
         />
       </li>
     </ul>

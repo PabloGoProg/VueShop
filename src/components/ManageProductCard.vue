@@ -30,6 +30,10 @@ const props = defineProps({
     type: Function,
     required: true,
   },
+  currentProducts: {
+    type: Array,
+    required: true,
+  },
 });
 </script>
 
@@ -56,6 +60,7 @@ const props = defineProps({
           :handleUpdateProducts="props.handleUpdateProducts"
           :buttonText="'✏️  Editar producto!'"
           :product="props.product"
+          :currentProducts="props.currentProducts"
         />
         <ModalDeleteProduct
           :buttonText="'🗑️  Eliminar producto'"
