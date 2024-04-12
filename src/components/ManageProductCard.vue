@@ -26,6 +26,10 @@ const props = defineProps({
     type: Function,
     required: true,
   },
+  handleDeleteProduct: {
+    type: Function,
+    required: true,
+  },
 });
 </script>
 
@@ -49,13 +53,14 @@ const props = defineProps({
       <span v-else> No aplica </span>
       <div class="flex gap-[1rem] mx-auto mt-4">
         <ModalEditProduct
+          :handleUpdateProducts="props.handleUpdateProducts"
           :buttonText="'✏️  Editar producto!'"
           :product="props.product"
         />
         <ModalDeleteProduct
           :buttonText="'🗑️  Eliminar producto'"
           :productIndex="props.product.id"
-          :handleUpdateProducts="props.handleUpdateProducts"
+          :handleDeleteProduct="props.handleDeleteProduct"
         />
       </div>
     </section>

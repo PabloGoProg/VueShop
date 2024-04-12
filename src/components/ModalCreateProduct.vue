@@ -15,6 +15,10 @@ const props = defineProps({
 
 const openModal = ref(false);
 const loading = ref(false);
+const errors = ref([]);
+const avaliableProducts = ref(
+  JSON.parse(localStorage.getItem("avaliableProducts"))
+);
 
 const inputValues = ref({
   name: "",
@@ -30,11 +34,49 @@ const handleChangeInput = (event) => {
   };
 };
 
-const handleCreateProduct = async () => {
+const lookDuplicates = (name) => {
+  const found = false;
+  for (let i = 0; i < props.currentProducts.length; i++) {
+    if (props.currentProducts[i].name === name) {
+      return true;
+    }
+  }
+
+  return found;
+};
+
+const handleCreateProduct = async (event) => {
   const { name, price, expiration } = inputValues.value;
-  if (name === "" && name.length <= 5) {
-    return;
-  } else if (price === 0 || price < 0) {
+  errors.value = [];
+  event.preventDefault();
+
+  if (name === "") {
+    errors.value.push("El nombre del producto es requerido");
+  }
+  if (name.length <= 5 && name.length > 0) {
+    errors.value.push(
+      "El nombre del producto debe tener al menos 5 caracteres"
+    );
+  }
+  if (price === 0 || price < 0) {
+    errors.value.push(
+      "El precio del producto debe ser mayor un valor positivo"
+    );
+  }
+  if (price === "") {
+    errors.value.push("El precio del producto es requerido");
+  }
+  if (Date.parse(inputValues.value.expiration) < Date.now()) {
+    errors.value.push(
+      "La fecha de expiración debe ser mayor a la fecha actual"
+    );
+  }
+  if (lookDuplicates(name)) {
+    errors.value.push("El producto ya existe");
+  }
+
+  if (errors.value.length > 0) {
+    event.preventDefault();
     return;
   }
 
@@ -68,7 +110,17 @@ const handleCreateProduct = async () => {
       <div
         class="modal-overlay"
         v-if="openModal"
-        @click="openModal = false"
+        @click="
+          () => {
+            openModal = false;
+            errors = [];
+            inputValues = {
+              name: '',
+              price: '',
+              expiration: '',
+            };
+          }
+        "
       ></div>
     </transition>
     <transition name="fade" appear>
@@ -77,6 +129,15 @@ const handleCreateProduct = async () => {
         v-if="openModal && loading === false"
       >
         <h3 class="text-xl font-semibold">Ingresar datos del producto 📝</h3>
+        <div class="flex flex-col gap-2" v-if="errors.length > 0">
+          <span
+            class="bg-red-200 text-red-700 text-sm rounded-sm px-2 py-1 border-l-2 border-red-700"
+            v-for="error in errors"
+            key:index
+          >
+            {{ error }}
+          </span>
+        </div>
         <form class="flex flex-col gap-4" action="">
           <input
             class="bg-gray-100 text-black text-opacity-70 rounded-lg px-2 py-1"
@@ -106,7 +167,7 @@ const handleCreateProduct = async () => {
           </div>
           <button
             class="mx-auto bg-gray-300 text-black text-lg font-semibold rounded-lg max-w-fit px-2 py-1 hover:shadow-md hover:bg-green-500 transition-all duration-300"
-            @click="handleCreateProduct(loading, inputValues)"
+            @click="(event) => handleCreateProduct(event)"
           >
             + Crear producto
           </button>

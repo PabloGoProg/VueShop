@@ -1,9 +1,9 @@
 const baseURL = 'http://localhost:8000'
 
-const fetchProducts = (productList, loading) => {
+const fetchProducts = async (productList, loading) => {
   try {
     loading.value = true;
-    const res = fetch(baseURL + "/products")
+    const res = await fetch(baseURL + "/products")
       .then((res) => res.json())
       .then((data) => {
         productList.value.push(...data);
@@ -14,10 +14,10 @@ const fetchProducts = (productList, loading) => {
   }
 };
 
-const createProduct = (loading, product) => {
+const createProduct = async (loading, product) => {
   try {
     loading.value = true;
-    const res = fetch(baseURL + "/products", {
+    const res = await fetch(baseURL + "/products", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -35,9 +35,9 @@ const createProduct = (loading, product) => {
 
 }
 
-const editProduct = (product) => {
+const editProduct = async (product, callback) => {
   try {
-    const res = fetch(baseURL + `/products/${product.id}`, {
+    const res = await fetch(baseURL + `/products/${product.id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -47,15 +47,16 @@ const editProduct = (product) => {
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
+        callback;
       })
   } catch (error) {
     console.error(error);
   }
 }
 
-const deleteProduct = (productIndex) => {
+const deleteProduct = async (productIndex) => {
   try {
-    const res = fetch(baseURL + `/products/${productIndex}`, {
+    const res = await fetch(baseURL + `/products/${productIndex}`, {
       method: "DELETE",
     })
       .then((res) => console.log(res))

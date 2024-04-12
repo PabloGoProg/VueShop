@@ -11,7 +11,7 @@ const props = defineProps({
     type: Number,
     required: true,
   },
-  handleUpdateProducts: {
+  handleDeleteProduct: {
     type: Function,
     required: true,
   },
@@ -22,7 +22,7 @@ const openModal = ref(false);
 const handleDeleteProduct = () => {
   deleteProduct(props.productIndex);
 
-  props.handleUpdateProducts();
+  props.handleDeleteProduct();
   openModal.value = !openModal.value;
 };
 </script>
@@ -44,18 +44,20 @@ const handleDeleteProduct = () => {
     </transition>
     <transition name="fade" appear>
       <div
-        class="max-w-[30dvw] flex flex-col gap-[1.4rem] fixed top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] bg-white rounded-lg p-[1rem] z-10"
+        class="max-w-[30dvw] fixed top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] bg-white rounded-lg p-[1rem] z-10"
         v-if="openModal"
       >
-        <span class="font-normal text-xl text-center">
-          Estás seguro de que quieres eliminar el producto?</span
-        >
-        <button
-          class="mx-auto bg-gray-300 text-black text-lg font-semibold rounded-lg max-w-fit px-2 py-1 hover:shadow-md hover:bg-red-400 transition-all duration-300"
-          @click="handleDeleteProduct"
-        >
-          Estoy seguro!
-        </button>
+        <form class="flex flex-col gap-[1.4rem]" action="">
+          <span class="font-normal text-xl text-center">
+            Estás seguro de que quieres eliminar el producto?</span
+          >
+          <button
+            class="mx-auto bg-gray-300 text-black text-lg font-semibold rounded-lg max-w-fit px-2 py-1 hover:shadow-md hover:bg-red-400 transition-all duration-300"
+            @click="handleDeleteProduct"
+          >
+            Estoy seguro!
+          </button>
+        </form>
       </div>
     </transition>
   </section>

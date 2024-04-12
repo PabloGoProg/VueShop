@@ -19,6 +19,11 @@ const handleUpdateProducts = () => {
   fetchProducts(currentProducts, loading);
 };
 
+const handleDeleteProduct = () => {
+  currentProducts.value = [];
+  fetchProducts(currentProducts, loading);
+};
+
 fetchProducts(currentProducts, loading);
 </script>
 
@@ -48,12 +53,14 @@ fetchProducts(currentProducts, loading);
         <ManageProductCard
           :product="product"
           :handleUpdateProducts="handleUpdateProducts"
+          :handleDeleteProduct="handleDeleteProduct"
         />
       </li>
       <li v-else v-for="product in filteredProducts">
         <ManageProductCard
           :product="product"
           :handleUpdateProducts="handleUpdateProducts"
+          :handleDeleteProduct="handleDeleteProduct"
         />
       </li>
     </ul>

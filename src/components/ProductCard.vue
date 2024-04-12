@@ -27,17 +27,30 @@ const props = defineProps({
 const currentCart = ref(JSON.parse(localStorage.getItem(shoppingCartKey)));
 
 const searchProductInCart = () => {
-  const found = currentCart.value.some(
-    (cartProduct) => cartProduct.id === props.product.id
+  const index = currentCart.value.findIndex(
+    (item) => item.id === props.product.id
   );
-  return found;
+
+  const found = index !== -1;
+
+  return [found, index];
 };
 
-const isInCart = ref(searchProductInCart());
+const isInCart = ref(searchProductInCart()[0]);
 
 const addToCart = () => {
   addItemToCart(currentCart.value, props.product);
   isInCart.value = !isInCart.value;
+};
+
+const removeProductFromCart = () => {
+  const [found, index] = searchProductInCart();
+
+  if (found) {
+    currentCart.value.splice(index, 1);
+    localStorage.setItem(shoppingCartKey, JSON.stringify(currentCart.value));
+    isInCart.value = !isInCart.value;
+  }
 };
 </script>
 
@@ -51,6 +64,8 @@ const addToCart = () => {
       alt="Product image template"
     />
     <section class="flex flex-col px-3 py-2 gap-1">
+      clear
+
       <div class="flex justify-between text-[1.2rem] items-center">
         <span class="font-semibold">{{ product.name }}</span>
         <span>{{ showCurrency(product.price) + " COP" }}</span>
@@ -69,6 +84,9 @@ const addToCart = () => {
       <button
         class="bg-green-500 bg-opacity-80 text-white max-w-fit px-4 py-0.5 rounded-lg font-semibold text-[1.2rem] mt-2 hover:bg-red-500 transition-all duration-300"
         v-else
+        onmouseover="this.innerText = 'Eliminar del carrito'"
+        onmouseout="this.innerText = 'En tu carrito!'"
+        @click="removeProductFromCart"
       >
         En tu carrito!
       </button>
