@@ -1,8 +1,11 @@
 import { createWebHistory, createRouter } from "vue-router";
 
 // Import components that would be related to the routes
-import Home from './components/Home.vue'
-import Products from './components/Products.vue'
+import Home from './views/Home.vue'
+import Products from './views/Products.vue'
+import ShoppingCart from './views/ShoppingCart.vue'
+import Settings from './views/Settings.vue'
+import Buys from './views/Buys.vue'
 
 const routes = [
   {
@@ -10,8 +13,20 @@ const routes = [
     component: Home
   },
   {
-    path: '/products',
+    path: '/productos',
     component: Products
+  },
+  {
+    path: '/carrito',
+    component: ShoppingCart
+  },
+  {
+    path: '/mis-compras',
+    component: Buys
+  },
+  {
+    path: '/opciones',
+    component: Settings
   }
 ]
 
@@ -20,4 +35,4 @@ const router = createRouter({
   routes,
 })
 
-export default router
+export default router;
